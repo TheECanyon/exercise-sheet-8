@@ -1,11 +1,11 @@
 package de.unistuttgart.iste.rss.oo.hamstersimulator.sheet08.homework.olympics;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import de.unistuttgart.iste.rss.oo.hamstersimulator.datatypes.Direction;
 import de.unistuttgart.iste.rss.oo.hamstersimulator.datatypes.Location;
 import de.unistuttgart.iste.rss.oo.hamstersimulator.external.model.SimpleHamsterGame;
+
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class OlympicsHamsterGame extends SimpleHamsterGame {
@@ -20,30 +20,37 @@ public class OlympicsHamsterGame extends SimpleHamsterGame {
 
 	@Override
 	protected void run() {
-		paule.write("Willkommen zum ersten Rennen des Tages!");
-		setupTaskC();
-		race();
-		
-		paule.write("Und nun folgt das zweite Rennen!");
-		setupTaskD();
-		race();
-		
 		paule.write("Zum Abschluss: Ein Weltrekordversuch! Kann Speedy heute den Rekord brechen?");
 		recordAttempt();
 	}
 	
 	private void recordAttempt() {
-		RunnerHamster speedy = new RunnerHamster(game.getTerritory(), new Location(1, 1), Direction.EAST);
-		
-		// put your code for task (e) between here
-		while(!speedy.hasFinished()) {
-			speedy.executeNextAction();
+	    RunnerHamster speedy = new RunnerHamster(game.getTerritory(), new Location(1, 1), Direction.EAST);
+
+	    // put your code for task (e) between her
+	    while (!speedy.hasFinished()) {
+
+		SprinterRacePlan firstStage = new SprinterRacePlan();
+		FeedTwiceStrategy feedingStrategy = new FeedTwiceStrategy();
+		speedy.setFeedingTactics(feedingStrategy);
+
+		while (speedy.getActionsTaken() < 9) {
+		    speedy.setRacePlan(firstStage);
+		    speedy.executeNextAction();
 		}
-		
-		// end here
-		
-		if(speedy.hasFinished())
-			speedy.write("Ich habe " + speedy.getActionsTaken() + " Aktionen gebraucht!");
+		RunSteadilyRacePlan secondStage = new RunSteadilyRacePlan();
+		speedy.setRacePlan(secondStage);
+		while (speedy.getActionsTaken() > 8) {
+		    speedy.write("" + speedy.getActionsTaken());
+		    speedy.executeNextAction();
+		}
+
+	    }
+
+	    // and here
+
+	    if (speedy.hasFinished())
+		speedy.write("Ich habe " + speedy.getActionsTaken() + " Aktionen gebraucht!");
 	}
 
 	/**

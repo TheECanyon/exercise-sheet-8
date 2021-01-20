@@ -5,8 +5,13 @@ public class FeedOnceStrategy implements FeedingStrategy {
 
 	@Override
 	public boolean isFeedingRequired() {
-		//put code for task (d) here
+	    if (!hasUsedThisStation) {
+		this.hasUsedThisStation = true;
+		return true;
+	    } else {
+		this.hasUsedThisStation = false;
 		return false;
+	    }
 	}
 
 }

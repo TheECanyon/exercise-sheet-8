@@ -76,7 +76,7 @@ public class RunnerHamster extends Hamster {
 	 * regenerating five energy points
 	 * This method requires the hamster to be situated on a feeding zone (check by calling isAtFeedingZone()
 	 * beforehand).
-	 * It ensures that the hamster picks up a grain and has an additional five energy points afer execution.
+	 * It ensures that the hamster picks up a grain and has an additional five energy points after execution.
 	 */
 	public void useFeedZone() {
 		if(!grainAvailable())
@@ -84,7 +84,6 @@ public class RunnerHamster extends Hamster {
 		pickGrain();
 		energyRemaining += 5;
 	}
-
 
 	/**
 	 * Returns the amount of energy points this hamster has left at the moment.
@@ -147,7 +146,6 @@ public class RunnerHamster extends Hamster {
 	public void setRacePlan(RacePlan tactics) {
 		this.runningTactic = tactics;
 	}
-
 
 	/**
 	 * Sets this hamsters FeedingStrategy to tactics
