@@ -34,13 +34,14 @@ public class OlympicsHamsterGame extends SimpleHamsterGame {
 		FeedTwiceStrategy feedingStrategy = new FeedTwiceStrategy();
 		speedy.setFeedingTactics(feedingStrategy);
 
-		while (speedy.getActionsTaken() < 9) {
+		while (speedy.getActionsTaken() < 8) {
 		    speedy.setRacePlan(firstStage);
 		    speedy.executeNextAction();
 		}
+		
 		RunSteadilyRacePlan secondStage = new RunSteadilyRacePlan();
 		speedy.setRacePlan(secondStage);
-		while (speedy.getActionsTaken() > 8) {
+		while (speedy.getActionsTaken() >= 8 && speedy.getActionsTaken() < 30) {
 		    speedy.write("" + speedy.getActionsTaken());
 		    speedy.executeNextAction();
 		}

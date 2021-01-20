@@ -1,19 +1,17 @@
 package de.unistuttgart.iste.rss.oo.hamstersimulator.sheet08.homework.olympics;
 
 public class FeedTwiceStrategy implements FeedingStrategy {
-    private boolean hasUsedThisStationOnce = false;
-    private boolean hasUsedThisStationTwice = false;
-
+    int grainsTaken = 1;
     @Override public boolean isFeedingRequired() {
-	if (!hasUsedThisStationOnce) {
-	    this.hasUsedThisStationOnce = true;
+
+	if (grainsTaken==1) {
+		grainsTaken++;
 	    return true;
-	} else if (!hasUsedThisStationTwice) {
-	    this.hasUsedThisStationTwice = true;
+	} else if (grainsTaken==2) {
+		grainsTaken++;
 	    return true;
 	} else {
-	    this.hasUsedThisStationOnce = false;
-	    this.hasUsedThisStationTwice = false;
+		grainsTaken=1;
 	    return false;
 	}
     }
