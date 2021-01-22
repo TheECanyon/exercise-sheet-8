@@ -5,12 +5,12 @@ import java.util.Date;
 /**
  * Represents a person with a name and birth date.
  */
-public class Person {
+public final class Person {
 	//@ private instance invariant name != null && name.length() > 0;
 	//@ private instance invariant birthDate != null;
 	
-	public String name;
-	public Date birthDate;
+	public final String name;
+	public final Date birthDate;
 	
 	/*@
 	  @ requires name != null && name.length() > 0;
@@ -29,7 +29,7 @@ public class Person {
 			throw new IllegalArgumentException("A person may not have a null or empty name, and their birth date must not be null.");
 		}
 		this.name = name;
-		this.birthDate = birthDate;
+		this.birthDate = new Date(birthDate.getTime());
 	}
 	
 	/*@
@@ -49,39 +49,6 @@ public class Person {
 	 * @return This person's birth date.
 	 */
 	public /*@ pure @*/ Date getBirthDate() {
-		return birthDate;
+		return new Date(birthDate.getTime());
 	}
-	
-	/*@
-	  @ requires name != null;
-	  @ ensures this.name == name;
-	  @*/
-	/**
-	 * Sets this person's name.
-	 * @param name The new name.
-	 * @throws IllegalArgumentException If the preconditions are not satisfied.
-	 */
-	public void setName(final String name) throws IllegalArgumentException {
-		if (name == null || name.length() == 0) {
-			throw new IllegalArgumentException("A person may not have a null or empty name.");
-		}
-		this.name = name;
-	}
-	
-	/*@
-	  @ requires birthDate != null;
-	  @ ensures this.birthDate == birthDate;
-	  @*/
-	/**
-	 * Sets this person's birth date.
-	 * @param birthDate The new birth date.
-	 * @throws IllegalArgumentException If the preconditions are not satisfied.
-	 */
-	public void setBirthDate(final Date birthDate) throws IllegalArgumentException {
-		if (birthDate == null) {
-			throw new IllegalArgumentException("A person's birth date may not be null.");
-		}
-		this.birthDate = birthDate;
-	}
-	
 }
