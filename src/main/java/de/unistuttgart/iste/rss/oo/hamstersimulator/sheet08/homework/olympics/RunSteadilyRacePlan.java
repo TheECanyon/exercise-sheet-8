@@ -9,7 +9,11 @@ public class RunSteadilyRacePlan implements RacePlan{
 	 * Every actions is a two-tile-step, if possible
 	 */
 	@Override
-	public void nextStep(RunnerHamster hamster) {
-	    hamster.runSteadily();
+	public void nextStep(final RunnerHamster hamster) {
+	    if (hamster.getEnergyRemaining() >= 1){
+	        hamster.runSteadily();
+	    } else {
+	        hamster.runSlowly();
+	    }
 	}
 }

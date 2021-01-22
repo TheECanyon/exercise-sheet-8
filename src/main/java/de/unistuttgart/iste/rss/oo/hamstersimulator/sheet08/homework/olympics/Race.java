@@ -35,7 +35,7 @@ public class Race {
 		}
 	}
 	
-	/*
+	/**
 	 * runs a single time step of the race, consisting of one round of steps from each of the competitors
 	 * that are still on the course
 	 */

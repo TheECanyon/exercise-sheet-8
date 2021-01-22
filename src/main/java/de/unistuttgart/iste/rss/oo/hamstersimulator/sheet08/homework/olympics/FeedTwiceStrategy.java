@@ -13,7 +13,6 @@ public class FeedTwiceStrategy implements FeedingStrategy {
      */
     @Override
     public boolean isFeedingRequired() {
-
 	if (grainsTaken < 2) {
 		grainsTaken++;
 	    return true;
