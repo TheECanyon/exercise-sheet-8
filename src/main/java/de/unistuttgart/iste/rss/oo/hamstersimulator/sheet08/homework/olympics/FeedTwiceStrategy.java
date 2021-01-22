@@ -5,7 +5,7 @@ package de.unistuttgart.iste.rss.oo.hamstersimulator.sheet08.homework.olympics;
  * @version 0.1.0.20210120_1816
  */
 public class FeedTwiceStrategy implements FeedingStrategy {
-    int grainsTaken = 1;
+    int grainsTaken = 10;
 
     /**
      * Makes two grains per feedzone required
@@ -14,10 +14,7 @@ public class FeedTwiceStrategy implements FeedingStrategy {
     @Override
     public boolean isFeedingRequired() {
 
-	if (grainsTaken==1) {
-		grainsTaken++;
-	    return true;
-	} else if (grainsTaken==2) {
+	if (grainsTaken < 2) {
 		grainsTaken++;
 	    return true;
 	} else {

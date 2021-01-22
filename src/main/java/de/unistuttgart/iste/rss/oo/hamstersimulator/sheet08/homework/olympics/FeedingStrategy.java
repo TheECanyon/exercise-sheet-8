@@ -11,5 +11,5 @@ public interface FeedingStrategy {
 	 * only call this method while the hamster is on a feeding zone!
 	 * @return boolean, true if the hamster should use the feeding zone, false if not
 	 */
-	public boolean isFeedingRequired();
+	boolean isFeedingRequired();
 }
