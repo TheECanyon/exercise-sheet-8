@@ -27,13 +27,21 @@ public class OlympicsHamsterGame extends SimpleHamsterGame {
      * starts a record attempt
      */
     /*@
-     @requires paule is initialized
-     @ensures recordAttempt finished
-     @*/
+      @requires paule is initialized
+      @ensures recordAttempt finished
+      @*/
 	@Override
 	protected void run() {
-		paule.write("Zum Abschluss: Ein Weltrekordversuch! Kann Speedy heute den Rekord brechen?");
-		recordAttempt();
+	    paule.write("Willkommen zum ersten Rennen des Tages!");
+	    setupTaskC();
+	    race();
+
+	    paule.write("Und nun folgt das zweite Rennen!");
+	    setupTaskD();
+	    race();
+
+	    paule.write("Zum Abschluss: Ein Weltrekordversuch! Kann Speedy heute den Rekord brechen?");
+	    recordAttempt();
 	}
 
     /**
@@ -43,30 +51,24 @@ public class OlympicsHamsterGame extends SimpleHamsterGame {
       @ensures speedy reached goal
       @*/
 	private void recordAttempt() {
-	    RunnerHamster speedy = new RunnerHamster(game.getTerritory(), new Location(1, 1), Direction.EAST);
-		SprinterRacePlan firstStage = new SprinterRacePlan();
-		FeedTwiceStrategy feedingStrategy = new FeedTwiceStrategy();
-		speedy.setFeedingTactics(feedingStrategy);
-         /*@
-          @ loop_invariant : speedy has made i actions
-          @ decreasing : distance from speedy to first feedzone
-          @*/
-		while (speedy.getActionsTaken() < 8) {
-		    speedy.setRacePlan(firstStage);
-		    speedy.executeNextAction();
+	    final RunnerHamster speedy = new RunnerHamster(game.getTerritory(), new Location(1, 1), Direction.EAST);
+	    final RacePlan sprintTactic = new SprinterRacePlan();
+	    final RacePlan runTactic = new RunSteadilyRacePlan();
+	    final FeedTwiceStrategy feedingStrategy = new FeedTwiceStrategy();
+
+	    speedy.setFeedingTactics(feedingStrategy);
+	    speedy.setRacePlan(runTactic);
+	    /*@
+	      @ loop_invariant speedy made i Actions
+	      @ decreasing distance to goal
+	      @*/
+	    while(!speedy.hasFinished()){
+	        speedy.executeNextAction();
+		if (speedy.getActionsTaken() == 22){
+		    speedy.setRacePlan(sprintTactic);
 		}
-		
-		RunSteadilyRacePlan secondStage = new RunSteadilyRacePlan();
-		speedy.setRacePlan(secondStage);
-	     /*@
-          @ loop_invariant : speedy has made i actions;
-          @ decreasing : distance from speedy to goal
-          @*/
-		while (speedy.getActionsTaken() >= 8 && speedy.getActionsTaken() < 30) {
-		    speedy.write("" + speedy.getActionsTaken());
-		    speedy.executeNextAction();
-		}
-	    
+	    }
+
 	    if (speedy.hasFinished()){
 		    speedy.write("Ich habe " + speedy.getActionsTaken() + " Aktionen gebraucht!");
 		}
