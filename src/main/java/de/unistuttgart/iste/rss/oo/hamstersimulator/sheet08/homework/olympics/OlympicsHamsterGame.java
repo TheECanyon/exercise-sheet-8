@@ -7,16 +7,15 @@ import de.unistuttgart.iste.rss.oo.hamstersimulator.external.model.SimpleHamster
 import java.util.LinkedList;
 import java.util.List;
 
-
+/**
+ * Dedicated game to solve the olympic exercises
+ */
 public class OlympicsHamsterGame extends SimpleHamsterGame {
 	List<RunnerHamster> runners;
 
     /**
-     *
+     * create an OlympicHamsterGame 
      */
-     /*@
-      @
-      @*/
 	public OlympicsHamsterGame() {
 		this.loadTerritoryFromResourceFile("/territories/raceTrackTerritory.ter");
 		this.displayInNewGameWindow();
@@ -25,10 +24,11 @@ public class OlympicsHamsterGame extends SimpleHamsterGame {
 	}
 
     /**
-     *
+     * starts a record attempt
      */
     /*@
-     @
+     @requires paule is initialized
+     @ensures recordAttempt finished
      @*/
 	@Override
 	protected void run() {
@@ -37,22 +37,19 @@ public class OlympicsHamsterGame extends SimpleHamsterGame {
 	}
 
     /**
-     *
+     * implements the strategy for a record run
      */
      /*@
-      @
+      @ensures speedy reached goal
       @*/
 	private void recordAttempt() {
 	    RunnerHamster speedy = new RunnerHamster(game.getTerritory(), new Location(1, 1), Direction.EAST);
-	    /*@
-	      @ loop_invariant : !speed.hasFinished() && speedy.getActionsTaken() >= 0;
-	      @*/
-	    while (!speedy.hasFinished()) {
 		SprinterRacePlan firstStage = new SprinterRacePlan();
 		FeedTwiceStrategy feedingStrategy = new FeedTwiceStrategy();
 		speedy.setFeedingTactics(feedingStrategy);
          /*@
-          @ loop_invariant : speedy.getActionsTaken() < 8;
+          @ loop_invariant : speedy has made i actions
+          @ decreasing : distance from speedy to first feedzone
           @*/
 		while (speedy.getActionsTaken() < 8) {
 		    speedy.setRacePlan(firstStage);
@@ -62,23 +59,19 @@ public class OlympicsHamsterGame extends SimpleHamsterGame {
 		RunSteadilyRacePlan secondStage = new RunSteadilyRacePlan();
 		speedy.setRacePlan(secondStage);
 	     /*@
-          @ loop_invariant : speedy.getActionsTaken() >= 8 && speedy.getActionsTaken() < 30;
+          @ loop_invariant : speedy has made i actions;
+          @ decreasing : distance from speedy to goal
           @*/
 		while (speedy.getActionsTaken() >= 8 && speedy.getActionsTaken() < 30) {
 		    speedy.write("" + speedy.getActionsTaken());
 		    speedy.executeNextAction();
 		}
-	    }
-	    if (speedy.hasFinished())
-		speedy.write("Ich habe " + speedy.getActionsTaken() + " Aktionen gebraucht!");
+	    
+	    if (speedy.hasFinished()){
+		    speedy.write("Ich habe " + speedy.getActionsTaken() + " Aktionen gebraucht!");
+		}
 	}
 
-	/**
-	 * sets up the runners to take part in a race with strategies as implemented in task (c)
-	 */
-     /*@
-      @
-      @*/
 	private void setupTaskC() {
 		runners = new LinkedList<RunnerHamster>();
 		
@@ -95,12 +88,6 @@ public class OlympicsHamsterGame extends SimpleHamsterGame {
 		runners.add(sprintingRunner);
 	}
 	
-	/**
-	 * sets up the runners to take part in a race with strategies as implemented in task (d)
-	 */
-     /*@
-      @
-      @*/
 	private void setupTaskD() {
 		runners = new LinkedList<RunnerHamster>();
 		RunnerHamster steadyRunner = new RunnerHamster(game.getTerritory(), new Location(1, 1), Direction.EAST);
@@ -120,12 +107,6 @@ public class OlympicsHamsterGame extends SimpleHamsterGame {
 		runners.add(sprintingRunner);
 	}
 	
-	/**
-	 * runs a race with the competitors currently in runners
-	 */
-     /*@
-      @
-      @*/
 	private void race() {
 		Race race = new Race(runners);
 		race.executeRace();

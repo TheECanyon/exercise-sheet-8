@@ -1,5 +1,9 @@
 package de.unistuttgart.iste.rss.oo.hamstersimulator.sheet08.homework.olympics;
-
+/**
+ * interface for possible feeding strategies
+ * @author Max, Alex, Jannik
+ * @version 0.1.0.20210121_1612
+ */
 public interface FeedingStrategy {
 
 	/**
